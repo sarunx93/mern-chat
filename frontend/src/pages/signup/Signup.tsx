@@ -4,7 +4,7 @@ import { useState } from 'react'
 import useSignUp from '../../hooks/useSignUp.js'
 
 const Signup = () => {
-  const { signup } = useSignUp()
+  const { signup, loading } = useSignUp()
   const [inputs, setInputs] = useState({
     fullName: '',
     username: '',
@@ -88,7 +88,9 @@ const Signup = () => {
           </Link>
           <GenderCheckbox onCheckboxChange={handleCheckboxChange} selectedGender={inputs.gender} />
           <div>
-            <button className='btn btn-block btn-sm mt-2'>Sign up</button>
+            <button className='btn btn-block btn-sm mt-2' disabled={loading}>
+              {loading ? <span className='loading loading-spinner'></span> : 'Sign up'}
+            </button>
           </div>
         </form>
       </div>

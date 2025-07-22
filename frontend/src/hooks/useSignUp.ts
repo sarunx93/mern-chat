@@ -45,6 +45,7 @@ const useSignUp = () => {
 }
 export default useSignUp
 
+//put this in a helper file.
 function handleInputErrors({ fullName, username, password, confirmPassword, gender }: Inputs) {
   if (!fullName || !username || !password || !confirmPassword || !gender) {
     toast.error('Please fill all the fields')
