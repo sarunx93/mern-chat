@@ -29,8 +29,7 @@ const Conversation = (props: Props) => {
     const isSelected = selectedConversation?._id === conversation?._id
     const { onlineUsers } = useSocketContext()
     const isOnline = onlineUsers.includes(conversation._id)
-    console.log('onlineUsers', onlineUsers)
-    console.log('isOnline', isOnline, conversation._id)
+    
     return (
         <>
             <div
