@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, type JSX } from 'react'
 import { useAuthContext } from './AuthContext'
 import io from 'socket.io-client'
+import type { Socket } from 'socket.io-client'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const SocketContext = createContext({})
@@ -10,11 +11,12 @@ export const useSocketContext = () => {
     return useContext(SocketContext)
 }
 
-export const SocketContextProvider = ({ children }) => {
-    const [socket, setSocket] = useState<any | null>(null)
+export const SocketContextProvider = ({ children }: { children: React.ReactNode }) => {
+    const [socket, setSocket] = useState<Socket | null>(null)
     const [onlineUsers, setOnlineUser] = useState([])
+    //@ts-expect-error {} is defined in useAuthContext
     const { authUser } = useAuthContext()
-    //@ts-ignore
+    //@ts-expect-error aaa
     useEffect(() => {
         if (authUser) {
             // backend url
