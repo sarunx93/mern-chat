@@ -1,19 +1,19 @@
 import { create } from 'zustand'
+import type { SelectedConversationUser, MessageType } from '../utils/types'
 
-type SelectedConversationUser = {
-    fullName: string
-    gender: string
-    profilePic: string
-    username: string
-    __v: number
-    _id: string
+type ConversationState = {
+    selectedConversation: SelectedConversationUser | null
+    setSelectedConversation: (selectedConversation: SelectedConversationUser | null) => void
+    messages: MessageType[]
+    setMessages: (messages: MessageType[]) => void
 }
 
-const useConversation = create((set) => ({
+const useConversation = create<ConversationState>((set) => ({
     selectedConversation: null,
-    setSelectedConversation: (selectedConversation) => set({ selectedConversation }),
+    setSelectedConversation: (selectedConversation: SelectedConversationUser | null) =>
+        set({ selectedConversation }),
     messages: [],
-    setMessages: (messages) => set({ messages }),
+    setMessages: (messages: MessageType[]) => set({ messages }),
 }))
 
 export default useConversation

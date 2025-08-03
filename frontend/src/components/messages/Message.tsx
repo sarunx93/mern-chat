@@ -3,7 +3,7 @@ import { extractTime } from '../../utils/extractTime'
 import useConversation from '../../zustand/useConversation'
 
 type Props = {
-    key: number
+    key: string
     message: {
         _id: string
         senderId: string
@@ -18,7 +18,7 @@ type Props = {
 const Message = ({ message }: Props) => {
     const { authUser } = useAuthContext()
     const { selectedConversation } = useConversation()
-    const fromMe = message.senderId === authUser._id
+    const fromMe = message.senderId === authUser?._id
     const formattedTime = extractTime(message.createdAt)
     const chatClassName = fromMe ? 'chat-end' : 'chat-start'
     const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic

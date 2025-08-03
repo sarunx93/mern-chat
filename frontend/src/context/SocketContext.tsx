@@ -1,20 +1,29 @@
-import { createContext, useContext, useEffect, useState, type JSX } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { useAuthContext } from './AuthContext'
 import io from 'socket.io-client'
 import type { Socket } from 'socket.io-client'
 
+type SocketContextType = {
+    socket: Socket | null
+    onlineUsers: string[]
+}
+
 // eslint-disable-next-line react-refresh/only-export-components
-export const SocketContext = createContext({})
+export const SocketContext = createContext<SocketContextType | undefined>(undefined)
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useSocketContext = () => {
-    return useContext(SocketContext)
+    //add runtime check in hook
+    const context = useContext(SocketContext)
+    if (!context) {
+        throw new Error('useSocketContext must be used within SocketContextProvider')
+    }
+    return context
 }
 
 export const SocketContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [socket, setSocket] = useState<Socket | null>(null)
     const [onlineUsers, setOnlineUser] = useState([])
-    //@ts-expect-error {} is defined in useAuthContext
     const { authUser } = useAuthContext()
     //@ts-expect-error aaa
     useEffect(() => {
@@ -37,6 +46,7 @@ export const SocketContextProvider = ({ children }: { children: React.ReactNode 
                 setSocket(null)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authUser])
     return (
         <SocketContext.Provider value={{ socket, onlineUsers }}>{children}</SocketContext.Provider>
