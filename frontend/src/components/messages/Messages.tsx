@@ -3,6 +3,7 @@ import Message from './Message'
 import MessageSkeleton from '../skeletons/MessageSkeleton'
 import { useEffect, useRef } from 'react'
 import useListenMessages from '../../hooks/useListenMessages'
+import type { MessageType } from '../../utils/types'
 
 const Messages = () => {
     const { messages, loading } = useGetMessages()
@@ -21,7 +22,7 @@ const Messages = () => {
             )}
             {!loading &&
                 messages.length > 0 &&
-                messages.map((message: any) => (
+                messages.map((message: MessageType) => (
                     <div key={message._id} ref={lastMessageRef}>
                         <Message key={message._id} message={message} />
                     </div>

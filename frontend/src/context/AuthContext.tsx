@@ -7,7 +7,7 @@ type AuthUser = {
     _id: string
 }
 
-type AuthContextType = {
+export type AuthContextType = {
     authUser: AuthUser | null
     setAuthUser: React.Dispatch<React.SetStateAction<AuthUser | null>>
 }
