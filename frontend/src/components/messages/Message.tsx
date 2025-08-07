@@ -1,4 +1,5 @@
 import { useAuthContext } from '../../context/AuthContext'
+import useUpload from '../../hooks/useUpload'
 import { extractTime } from '../../utils/extractTime'
 import useConversation from '../../zustand/useConversation'
 
@@ -18,6 +19,7 @@ type Props = {
 const Message = ({ message }: Props) => {
     const { authUser } = useAuthContext()
     const { selectedConversation } = useConversation()
+    const { uploading } = useUpload()
     const fromMe = message.senderId === authUser?._id
     const formattedTime = extractTime(message.createdAt)
     const chatClassName = fromMe ? 'chat-end' : 'chat-start'
@@ -32,12 +34,18 @@ const Message = ({ message }: Props) => {
                     <img src={profilePic} alt='chat bubble' />
                 </div>
             </div>
-            <div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClasss} pb-2`}>
-                {message.message}
-            </div>
-            <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>
-                {formattedTime}
-            </div>
+            {uploading ? (
+                <h3>Uploading...</h3>
+            ) : (
+                <>
+                    <div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClasss} pb-2`}>
+                        {message.message}
+                    </div>
+                    <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>
+                        {formattedTime}
+                    </div>
+                </>
+            )}
         </div>
     )
 }

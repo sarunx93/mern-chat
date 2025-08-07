@@ -16,3 +16,10 @@ export type MessageType = {
     updatedAt: string
     message: string
 }
+
+export type ImageFileType = {
+    file: File | null
+    url: string
+    blob: string
+    type: string
+}
