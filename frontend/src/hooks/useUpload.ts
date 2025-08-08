@@ -6,8 +6,8 @@ const useUpload = () => {
     const [image, setImage] = useState<{ url: string; type: string; blob: string } | null>(null)
 
     const sendImage = async (img: any) => {
+        setUploading(true)
         try {
-            setUploading(true)
             const formData = new FormData()
             formData.append('image', img)
             const res = await fetch('/api/upload/upload_img', {

@@ -15,6 +15,7 @@ export type MessageType = {
     senderId: string
     updatedAt: string
     message: string
+    isTemp?: boolean
 }
 
 export type ImageFileType = {

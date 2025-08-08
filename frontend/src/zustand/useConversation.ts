@@ -5,7 +5,7 @@ type ConversationState = {
     selectedConversation: SelectedConversationUser | null
     setSelectedConversation: (selectedConversation: SelectedConversationUser | null) => void
     messages: MessageType[]
-    setMessages: (messages: MessageType[]) => void
+    setMessages: (messages: MessageType[] | ((prev: MessageType[]) => MessageType[])) => void
 }
 
 const useConversation = create<ConversationState>((set) => ({
@@ -13,7 +13,10 @@ const useConversation = create<ConversationState>((set) => ({
     setSelectedConversation: (selectedConversation: SelectedConversationUser | null) =>
         set({ selectedConversation }),
     messages: [],
-    setMessages: (messages: MessageType[]) => set({ messages }),
+    setMessages: (update) =>
+        set((state) => ({
+            messages: typeof update === 'function' ? update(state.messages) : update,
+        })),
 }))
 
 export default useConversation

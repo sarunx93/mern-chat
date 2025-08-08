@@ -28,6 +28,5 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     const [authUser, setAuthUser] = useState<AuthUser | null>(
         JSON.parse(localStorage.getItem('chat-user') as string) || null
     )
-    console.log('auth user', authUser)
     return <AuthContext.Provider value={{ authUser, setAuthUser }}>{children}</AuthContext.Provider>
 }

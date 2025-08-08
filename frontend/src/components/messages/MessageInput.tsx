@@ -6,6 +6,7 @@ import useUpload from '../../hooks/useUpload'
 import { useState } from 'react'
 
 import type { ImageFileType } from '../../utils/types'
+import { useUploadContext } from '../../context/UploadContext'
 
 const MessageInput = () => {
     const [message, setMessage] = useState<string>('')
@@ -15,18 +16,19 @@ const MessageInput = () => {
         blob: '',
         type: '',
     })
-    const { loading, sendMessage } = useSendMessage()
-    const { sendImage, setImage } = useUpload()
+    const { loading } = useSendMessage()
+    const { sendImage, setImage, sendMessage, setUploading } = useUploadContext()
 
     const handleImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        setImage(null)
         const data = await sendImage(e.target.files![0])
-        await sendMessage(data?.url)
+        if (typeof data?.url === 'string') {
+            await sendMessage(data?.url)
+        }
         if (e.target.files![0]) {
             setImage({
                 blob: URL.createObjectURL(e.target.files![0]),
-                url: data?.url,
-                type: data?.type,
+                url: data?.url || '',
+                type: data?.type || '',
             })
         }
     }
@@ -34,6 +36,7 @@ const MessageInput = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!message && !img.file) return
+        setUploading(true)
         await sendMessage(message)
         setMessage('')
     }
