@@ -4,7 +4,8 @@ import { getRandomEmoji } from '../../utils/emoji'
 
 const ConversationList = () => {
     const { loading, conversations } = useGetConversations()
-
+    const sorted = conversations.sort((a, b) => +b.createdAt - +a.createdAt)
+    console.log(sorted)
     return (
         <div className='py-2 flex flex-col overflow-auto'>
             {conversations.map((conversation: ConversationType, idx) => (

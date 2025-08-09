@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 
 const SearchInput = () => {
     const [search, setSearch] = useState('')
-    const { setSelectedConversation } = useConversation()
+    const { setSelectedConversationUser } = useConversation()
     const { conversations } = useGetConversations()
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -19,7 +19,7 @@ const SearchInput = () => {
             c.fullName.toLowerCase().includes(search.toLowerCase())
         )
         if (conversation) {
-            setSelectedConversation(conversation)
+            setSelectedConversationUser(conversation)
             setSearch('')
         } else {
             toast.error('No such user found')

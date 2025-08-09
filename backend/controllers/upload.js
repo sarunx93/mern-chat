@@ -10,13 +10,14 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 })
 
-const image = '../images/1442161322-image-o.jpg'
-
 export const uploadImage = async (req, res) => {
     const filePath = req.file?.path
-
+    if (!filePath) {
+        return res.status(400).json({ msg: 'No file uploaded.' })
+    }
     try {
         const result = await cloudinary.uploader.upload(filePath)
+        fs.unlinkSync(filePath)
         res.status(200).json({ url: result.secure_url, type: result.resource_type })
     } catch (error) {
         console.error('upload image', error)

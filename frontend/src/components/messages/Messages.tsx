@@ -4,13 +4,11 @@ import MessageSkeleton from '../skeletons/MessageSkeleton'
 import { useEffect, useRef } from 'react'
 import useListenMessages from '../../hooks/useListenMessages'
 import type { MessageType } from '../../utils/types'
-import { useUploadContext } from '../../context/UploadContext'
 
 const Messages = () => {
     const { messages, loading } = useGetMessages()
     useListenMessages()
     const lastMessageRef = useRef<HTMLDivElement | null>(null)
-    const { upLoading } = useUploadContext()
 
     useEffect(() => {
         setTimeout(() => {

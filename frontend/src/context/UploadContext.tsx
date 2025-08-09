@@ -1,4 +1,3 @@
-// UploadContext.tsx
 import { createContext, useContext, useState } from 'react'
 import useSendMessage from '../hooks/useSendMessage'
 import useConversation from '../zustand/useConversation'
@@ -16,7 +15,7 @@ type UploadContextType = {
         React.SetStateAction<{ url: string; type: string; blob: string } | null>
     >
     sendImage: (img: any) => Promise<{ url: string; type: string } | null>
-    sendMessage: (message: string) => Promise<void>
+    sendMessage: (message: string, isImg?: boolean) => Promise<void>
 }
 
 const UploadContext = createContext<UploadContextType | undefined>(undefined)
@@ -35,7 +34,7 @@ export const UploadContextProvider = ({ children }: { children: React.ReactNode 
     const [image, setImage] = useState<{ url: string; type: string; blob: string } | null>(null)
     const [loading, setLoading] = useState(false)
     const [messageId, setMessageId] = useState('')
-    const { messages, setMessages, selectedConversation } = useConversation()
+    const { messages, setMessages, selectedConversationUser } = useConversation()
     const { authUser } = useAuthContext()
     const tempId = uuidv4()
 
@@ -44,7 +43,7 @@ export const UploadContextProvider = ({ children }: { children: React.ReactNode 
         const tempMessage = {
             _id: tempId,
             senderId: authUser?._id || '', // replace with real user
-            receiverId: selectedConversation?._id || '',
+            receiverId: selectedConversationUser?._id || '',
             message: 'Uploading...',
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
@@ -71,17 +70,17 @@ export const UploadContextProvider = ({ children }: { children: React.ReactNode 
         }
     }
 
-    const sendMessage = async (message: string) => {
+    const sendMessage = async (message: string, isImage: boolean) => {
         try {
-            const res = await fetch(`/api/messages/send/${selectedConversation?._id}`, {
+            const res = await fetch(`/api/messages/send/${selectedConversationUser?._id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message }),
+                body: JSON.stringify({ message, isImage }),
             })
             const data = await res.json()
-
+            console.log('data', data)
             if (data.error) throw new data.error()
 
             setMessages([...messages, data])

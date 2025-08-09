@@ -2,43 +2,43 @@ import { BsSend } from 'react-icons/bs'
 import { MdOutlineAttachFile } from 'react-icons/md'
 
 import useSendMessage from '../../hooks/useSendMessage'
-import useUpload from '../../hooks/useUpload'
 import { useState } from 'react'
 
-import type { ImageFileType } from '../../utils/types'
 import { useUploadContext } from '../../context/UploadContext'
 
 const MessageInput = () => {
     const [message, setMessage] = useState<string>('')
-    const [img, setImg] = useState<ImageFileType>({
-        file: null,
-        url: '',
-        blob: '',
-        type: '',
-    })
     const { loading } = useSendMessage()
-    const { sendImage, setImage, sendMessage, setUploading } = useUploadContext()
+    const { sendImage, setImage, sendMessage, setUploading, image } = useUploadContext()
 
     const handleImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const data = await sendImage(e.target.files![0])
+        //show preview immediately
+        const file = e.target.files![0]
+        if (!file) return
+        setImage({
+            blob: URL.createObjectURL(file),
+            url: '',
+            type: file.type || '',
+        })
+
+        const data = await sendImage(file)
         if (typeof data?.url === 'string') {
-            await sendMessage(data?.url)
-        }
-        if (e.target.files![0]) {
+            await sendMessage(data?.url, true)
             setImage({
-                blob: URL.createObjectURL(e.target.files![0]),
-                url: data?.url || '',
-                type: data?.type || '',
+                blob: URL.createObjectURL(file),
+                url: data.url,
+                type: data.type,
             })
         }
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (!message && !img.file) return
+        if (!message && !image) return
         setUploading(true)
         await sendMessage(message)
         setMessage('')
+        setImage(null)
     }
 
     return (
@@ -51,13 +51,15 @@ const MessageInput = () => {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                 />
-                <button className='absolute inset-y-0 end-0 flex items-center pe-3 cursor-pointer'>
-                    {loading ? <div className='loading loading-spinner'></div> : <BsSend />}
-                </button>
-                <label htmlFor='file' className='cursor-pointer'>
-                    <MdOutlineAttachFile />
-                </label>
-                <input type='file' id='file' style={{ display: 'none' }} onChange={handleImg} />
+                <div className='absolute inset-y-0 end-0 flex items-center gap-2 pe-3'>
+                    <label htmlFor='file' className='cursor-pointer'>
+                        <MdOutlineAttachFile />
+                    </label>
+                    <input type='file' id='file' style={{ display: 'none' }} onChange={handleImg} />
+                    <button type='submit' className='flex items-center cursor-pointer'>
+                        {loading ? <div className='loading loading-spinner'></div> : <BsSend />}
+                    </button>
+                </div>
             </div>
         </form>
     )

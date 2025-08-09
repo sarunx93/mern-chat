@@ -8,6 +8,7 @@ import useConversation from '../../zustand/useConversation'
 type Props = {
     key: string
     message: {
+        isImage?: boolean
         _id: string
         senderId: string
         receiverId: string
@@ -16,20 +17,23 @@ type Props = {
         updatedAt: string
         shouldShake?: boolean
         isTemp?: boolean
+        type?: string
     }
 }
 
 const Message = ({ message }: Props) => {
     const { authUser } = useAuthContext()
-    const { selectedConversation } = useConversation()
+    const { selectedConversationUser } = useConversation()
     const fromMe = message.senderId === authUser?._id
     const formattedTime = extractTime(message.createdAt)
     const chatClassName = fromMe ? 'chat-end' : 'chat-start'
-    const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic
+    const profilePic = fromMe ? authUser.profilePic : selectedConversationUser?.profilePic
     const bubbleBgColor = fromMe ? 'bg-blue-500' : ''
     const shakeClasss = message.shouldShake ? 'shake' : ''
 
     const { upLoading, messageId, image } = useUploadContext()
+
+    // const isImg = message.message.includes('')
 
     return (
         <div className={`chat ${chatClassName}`}>
@@ -41,7 +45,19 @@ const Message = ({ message }: Props) => {
 
             <>
                 <div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClasss} pb-2`}>
-                    {upLoading && message.isTemp ? <img src={image?.blob} /> : message.message}
+                    {upLoading && message.isTemp ? (
+                        <div className='block max-w-sm h-auto rounded-lg opacity-5'>
+                            <img src={image?.blob} />{' '}
+                        </div>
+                    ) : message.isImage ? (
+                        <img
+                            src={message.message}
+                            alt='sent image'
+                            className='max-w-xs rounded-lg'
+                        />
+                    ) : (
+                        <p>{message.message}</p>
+                    )}
                 </div>
                 <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>
                     {formattedTime}
