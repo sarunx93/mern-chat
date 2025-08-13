@@ -36,5 +36,5 @@ Database
 
 
 ## How to run the project
-After cloning this repo, please run `npm install` at the root and insdie frontend folder. Then, run `npm run server` at the root and `npm run dev` inside frontend folder.
+After cloning this repo, please run `npm install` at the root and insdie frontend folder. Then, run `npm run server` at the root and `cd frontend` to go into the frontend folder and run `npm run dev` inside frontend folder to spin up the client.
 
