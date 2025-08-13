@@ -14,8 +14,15 @@ const MessageContainer = () => {
         }
     }, [setSelectedConversationUser])
 
+    const handleBackInSmallScreen = () => {
+        setSelectedConversationUser(null)
+    }
+
     return (
-        <div className='md:min-w-[450px] flex flex-col'>
+        <div
+            className={`md:min-w-[450px] md:flex flex-col min-h-0 flex-1 ${
+                selectedConversationUser ? 'flex' : 'hidden'
+            }`}>
             {!selectedConversationUser ? (
                 <NoChatSelected />
             ) : (
@@ -28,6 +35,9 @@ const MessageContainer = () => {
                     </div>
                     <Messages />
                     <MessageInput />
+                    <button className='block md:hidden' onClick={handleBackInSmallScreen}>
+                        back
+                    </button>
                 </>
             )}
         </div>

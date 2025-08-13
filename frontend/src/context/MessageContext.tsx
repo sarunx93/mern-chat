@@ -22,7 +22,7 @@ export const MessageContextProvider = ({ children }: { children: React.ReactNode
     const { messages } = useGetMessages()
     useEffect(() => {
         setGlobalMessages(messages)
-    }, [])
+    }, [messages])
     return (
         <MessageContext.Provider
             value={{

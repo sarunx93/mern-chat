@@ -53,10 +53,10 @@ const Message = ({ message }: Props) => {
                         <img
                             src={message.message}
                             alt='sent image'
-                            className='max-w-xs rounded-lg'
+                            className='rounded-lg'
                         />
                     ) : (
-                        <p>{message.message}</p>
+                        <p className="break-words">{message.message}</p>
                     )}
                 </div>
                 <div className='chat-footer opacity-50 text-xs flex gap-1 items-center'>

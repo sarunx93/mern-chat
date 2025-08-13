@@ -56,7 +56,8 @@ export const getMessages = async (req, res) => {
 
         const conversation = await Conversation.findOne({
             participants: { $all: [senderId, userToChatId] },
-        }).populate({ path: 'messages', options: { sort: { createdAt: -1 } } })
+        }).populate({ path: 'messages'} )
+        // }).populate({ path: 'messages', options: { sort: { createdAt: -1 } } })
 
         if (!conversation) return res.status(200).json([])
 
