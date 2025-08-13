@@ -80,7 +80,6 @@ export const UploadContextProvider = ({ children }: { children: React.ReactNode 
                 body: JSON.stringify({ message, isImage }),
             })
             const data = await res.json()
-            console.log('data', data)
             if (data.error) throw new data.error()
 
             setMessages([...messages, data])

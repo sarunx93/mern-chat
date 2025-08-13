@@ -17,7 +17,6 @@ const useSendMessage = () => {
                 body: JSON.stringify({ message }),
             })
             const data = await res.json()
-            console.log('message data', data)
             if (data.error) throw new data.error()
             setMessages([...messages, data])
             setMessageId(data._id)
