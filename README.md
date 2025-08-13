@@ -38,10 +38,3 @@ Database
 ## How to run the project
 After cloning this repo, please run `npm install` at the root and insdie frontend folder. Then, run `npm run server` at the root and `npm run dev` inside frontend folder.
 
-##Features
-- Real Time Chat
-- Sign up and Sign in
-- Image Upload
-- [To be added] Create a chat group
-- [To be added] Profile update
-
