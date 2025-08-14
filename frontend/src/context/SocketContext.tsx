@@ -29,7 +29,7 @@ export const SocketContextProvider = ({ children }: { children: React.ReactNode 
     useEffect(() => {
         if (authUser) {
             // backend url
-            const socket = io('http://localhost:5000', {
+            const socket = io('https://mern-chat-jrve.onrender.com', {
                 query: {
                     userId: authUser._id,
                 },
