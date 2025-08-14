@@ -1,4 +1,3 @@
-import { useMessageContext } from '../../context/MessageContext.tsx'
 import { useSocketContext } from '../../context/SocketContext.tsx'
 import useConversation from '../../zustand/useConversation.ts'
 
@@ -24,10 +23,10 @@ export type ErrorType = {
 }
 
 const Conversation = (props: Props) => {
-    const { conversation, lastIndex, emoji } = props
+    const { conversation, lastIndex } = props
 
     const { selectedConversationUser, setSelectedConversationUser } = useConversation()
-    const { globalMessages } = useMessageContext()
+    // const { globalMessages } = useMessageContext()
 
     const isSelected = selectedConversationUser?._id === conversation?._id
     const { onlineUsers } = useSocketContext()

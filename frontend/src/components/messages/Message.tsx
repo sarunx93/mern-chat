@@ -1,7 +1,5 @@
 import { useAuthContext } from '../../context/AuthContext'
-import { UploadContextProvider, useUploadContext } from '../../context/UploadContext'
-import useSendMessage from '../../hooks/useSendMessage'
-import useUpload from '../../hooks/useUpload'
+import { useUploadContext } from '../../context/UploadContext'
 import { extractTime } from '../../utils/extractTime'
 import useConversation from '../../zustand/useConversation'
 
@@ -31,7 +29,7 @@ const Message = ({ message }: Props) => {
     const bubbleBgColor = fromMe ? 'bg-blue-500' : ''
     const shakeClasss = message.shouldShake ? 'shake' : ''
 
-    const { upLoading, messageId, image } = useUploadContext()
+    const { upLoading, image } = useUploadContext()
 
     // const isImg = message.message.includes('')
 
