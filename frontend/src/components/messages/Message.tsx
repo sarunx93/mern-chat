@@ -51,7 +51,7 @@ const Message = ({ message }: Props) => {
                         <img
                             src={message.message}
                             alt='sent image'
-                            className='rounded-lg'
+                            className='rounded-lg md:w-sm'
                         />
                     ) : (
                         <p className="break-words">{message.message}</p>
