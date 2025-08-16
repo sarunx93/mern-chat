@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { test, expect } from 'vitest'
 import { render } from '../test-utils'
 import userEvent, { type UserEvent } from '@testing-library/user-event'

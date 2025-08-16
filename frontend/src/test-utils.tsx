@@ -1,12 +1,12 @@
-import { ReactElement } from 'react'
-import { render, RenderOptions } from '@testing-library/react'
+import type { ReactElement } from 'react'
+import { render, type RenderOptions } from '@testing-library/react'
 import { AuthContextProvider } from './context/AuthContext.tsx'
 import { SocketContextProvider } from './context/SocketContext.tsx'
 import { UploadContextProvider } from './context/UploadContext.tsx'
 import { MessageContextProvider } from './context/MessageContext.tsx'
 import { BrowserRouter } from 'react-router-dom'
-import App from './App.tsx'
 
+// eslint-disable-next-line react-refresh/only-export-components
 const AllProviders = ({ children }: { children: React.ReactNode }) => {
     return (
         <BrowserRouter>
