@@ -2,6 +2,10 @@
     "files": [],
     "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
     "compilerOptions": {
-        "types": ["vitest/globals", "@testing-library/jest-dom"]
-    }
+        "types": ["vitest/globals", "@testing-library/jest-dom"],
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true
+    },
+    "include": ["src", "__tests__"]
 }

@@ -5,7 +5,9 @@ const LogoutButton = () => {
     const { logout } = useLogout()
     return (
         <div className='mt-auto'>
-            <BiLogOut className='w-6 h-6 text-white cursor-pointer' onClick={logout} />
+            <button onClick={logout} aria-label='logout'>
+                <BiLogOut className='w-6 h-6 text-white cursor-pointer' />
+            </button>
         </div>
     )
 }

@@ -6,6 +6,7 @@ import { UploadContextProvider } from './context/UploadContext.tsx'
 import { MessageContextProvider } from './context/MessageContext.tsx'
 import { BrowserRouter } from 'react-router-dom'
 
+
 // eslint-disable-next-line react-refresh/only-export-components
 const AllProviders = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -13,7 +14,10 @@ const AllProviders = ({ children }: { children: React.ReactNode }) => {
             <AuthContextProvider>
                 <SocketContextProvider>
                     <MessageContextProvider>
-                        <UploadContextProvider>{children}</UploadContextProvider>
+                        <UploadContextProvider>
+                            {/* <Toaster /> */}
+                            {children}
+                        </UploadContextProvider>
                     </MessageContextProvider>
                 </SocketContextProvider>
             </AuthContextProvider>
